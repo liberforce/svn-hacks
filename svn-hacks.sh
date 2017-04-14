@@ -33,6 +33,12 @@ svn () {
     #page it if there's more one screen
     command svn diff "$@" | colordiff | sed -e 's/\r//g' | less -RF
 
+  elif [ $sub_cmd == 'format-patch' ]; then
+    # svn diff alias adds colordiff extra characters, not suitable for a patch
+    # No colordiff, use unified patch, with c function names to make failing
+    # patches easier to adapt
+    command svn diff -x '--unified --show-c-function' --patch-compatible "$@" | sed -e 's;^--- ;&a/;' -e 's;^+++ ;&b/;'
+
   #add some color to svn status output and page if needed:
   #M = blue
   #A = green
