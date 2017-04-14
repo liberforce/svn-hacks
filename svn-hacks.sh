@@ -31,7 +31,7 @@ svn () {
     #colorize the diff
     #remove stupid ^M dos line endings
     #page it if there's more one screen
-    command svn diff "$@" | colordiff | sed -e 's/\r//g' | less -RF
+    command svn diff "$@" | colordiff | sed -e 's/\r//g' | less -RF --no-init
 
   elif [ $sub_cmd == 'format-patch' ]; then
     # svn diff alias adds colordiff extra characters, not suitable for a patch
@@ -50,7 +50,7 @@ svn () {
     command svn status "$@" | sed -e 's/^\(\([A-Z]\s\+\(+\s\+\)\?\)\?C .*\)$/\o33\[1;35m\1\o33[0m/' \
                                   -e 's/^\(\s*M.*\)$/\o33\[1;34m\1\o33[0m/' \
                                   -e 's/^\(A.*\)$/\o33\[1;32m\1\o33[0m/' \
-                                  -e 's/^\(\(D\|!\|~\).*\)$/\o33\[1;31m\1\o33[0m/' | less -RF
+                                  -e 's/^\(\(D\|!\|~\).*\)$/\o33\[1;31m\1\o33[0m/' | less -RF --no-init
 
   # Use commit messages templates
   # The cached message template is located at "$HOME/.cache/svn/commit-msg.tpl"
@@ -67,7 +67,7 @@ svn () {
   #to:
   #  2010-10-08 21:19 (Fri, +1300)
   elif [[ $sub_cmd == log ]]; then
-    command svn log "$@" | sed -e 's/^\(.*\)|\(.*\)| \(.*\) \(.*\):[0-9]\{2\} \(.*\) (\(...\).*) |\(.*\)$/\o33\[1;32m\1\o33[0m|\o33\[1;34m\2\o33[0m| \o33\[1;35m\3 \4 (\6, \5)\o33[0m |\7/' | less -RF
+    command svn log "$@" | sed -e 's/^\(.*\)|\(.*\)| \(.*\) \(.*\):[0-9]\{2\} \(.*\) (\(...\).*) |\(.*\)$/\o33\[1;32m\1\o33[0m|\o33\[1;34m\2\o33[0m| \o33\[1;35m\3 \4 (\6, \5)\o33[0m |\7/' | less -RF --no-init
 
   #let svn handle it as normal
   else
