@@ -52,6 +52,11 @@ svn () {
                                   -e 's/^\(A.*\)$/\o33\[1;32m\1\o33[0m/' \
                                   -e 's/^\(\(D\|!\|~\).*\)$/\o33\[1;31m\1\o33[0m/' | less -RF
 
+  # Use commit messages templates
+  # The cached message template is located at "$HOME/.cache/svn/commit-msg.tpl"
+  elif [[ $sub_cmd =~ ^(commit|ci)$ ]]; then
+    SVN_EDITOR="file=\$(ls -1 -v svn-commit*.tmp | tail -n 1) ; sed -i '/--$/r $HOME/.cache/svn/commit-msg.tpl' \$file && vi" command svn commit "$@"
+
   #page some stuff I often end up paging manually
   elif [[ $sub_cmd =~ ^(blame|help|h|cat)$ ]]; then
     command svn $sub_cmd "$@" | less -F
