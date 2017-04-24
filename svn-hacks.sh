@@ -57,7 +57,7 @@ svn () {
 
   #page some stuff I often end up paging manually
   elif [[ $sub_cmd =~ ^(blame|help|h|cat)$ ]]; then
-    command svn $sub_cmd "$@" | less -F
+    command svn $sub_cmd "$@" | less -RF --no-init
 
   # colorize and page svn log
   # rearrange the date field from:
