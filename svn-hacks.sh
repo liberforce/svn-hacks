@@ -39,7 +39,7 @@ svn () {
 
   elif [ $sub_cmd == 'grep' ]; then
     # Exclude the .svn directories by default
-    command grep -R --exclude-dir '.svn' "$@"
+    command grep -R --color --exclude-dir '.svn' "$@"
 
   # add some color to svn status output and page if needed:
   # M = blue
