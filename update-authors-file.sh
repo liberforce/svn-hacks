@@ -44,13 +44,14 @@ main()
 
     authors=$(svn log "$repo" -q | grep -e '^r' | awk 'BEGIN { FS = "|" } ; { print $2 }' | sort | uniq)
     for author in ${authors}; do
-            local name=$(get_author_name "${author}")
-            if [ -z "${name}" ] ; then
-                    name="Unknown"
-            fi
-            echo "${author} = ${name} <USER@DOMAIN>";
+        local name=$(get_author_name "${author}")
+        if [ -z "${name}" ] ; then
+            name="Unknown"
+        fi
+        echo "${author} = ${name} <USER@DOMAIN>";
     done >> "$tmpfile"
     cat "$tmpfile" | sort -u > "$authorsfile"
+    rm "$tmpfile"
 }
 
 main "$@"
