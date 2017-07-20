@@ -34,6 +34,9 @@ main()
         echo "Error: Please configure location of your authors file first using:" >&2
         echo "   git config --global svn.authorsfile /location/to/your/authors/file" >&2
         exit 1
+    else
+        # In case the file was configured in git but not created
+        touch "$authorsfile"
     fi
 
     local tmpfile=$(mktemp)
